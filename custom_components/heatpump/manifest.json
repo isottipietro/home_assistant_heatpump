@@ -1,0 +1,11 @@
+{
+  "domain": "heatpump",
+  "name": "Heat Pump",
+  "documentation": "https://www.github.com/isottipietro/home_assistant_heatpump",
+  "requirements": [],
+  "codeowners": ["@isottipietro"],
+  "config_flow": true,
+  "iot_class": "local_polling",
+  "integration_type": "device",
+  "version": "0.0.1"
+}
