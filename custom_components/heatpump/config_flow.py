@@ -13,12 +13,14 @@ from homeassistant.exceptions import HomeAssistantError
 
 from .const import DOMAIN
 
+from heatpump import *
+
 _LOGGER = logging.getLogger(__name__)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
         vol.Required("address"): str,
-        vol.Required("port"): str,
+        vol.Required("port"): str
     }
 )
 
@@ -33,8 +35,9 @@ class PlaceholderHub:
         """Initialize."""
 
     async def authenticate(self, address: str, port: str) -> bool:
-        """Test if we can authenticate with the host."""
-        return True
+        test = SerialMonitor(address, port)
+        if test.test_connection():
+            return True
 
 
 async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str, Any]:

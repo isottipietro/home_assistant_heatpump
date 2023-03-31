@@ -1,5 +1,5 @@
 {
-  "name": "Generic Heat Pump",
-  "render_readme": false,
+  "name": "Heat Pump",
+  "render_readme": true,
   "content_in_root": false
 }
