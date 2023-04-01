@@ -74,11 +74,13 @@ class SerialMonitor:
 
 	def test_connection(self):
 		self.device.reset_input_buffer()
-		while i < 10:
+		i = 0
+		while i < 100:
 			Data = self.device.read(1200).hex()
 			if is_packet_ok(Data):
 				return True
 			i += 1
+		return False
 
 try:
 	pdc = SerialMonitor('192.168.188.4', '8899')

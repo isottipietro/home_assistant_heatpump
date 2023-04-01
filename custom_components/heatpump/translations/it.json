@@ -9,15 +9,12 @@
             "invalid_auth": "Autenticazione non valida",
             "unknown": "Errore imprevisto"
         },
-        "flow_title": "{serial} ({host})",
+        "title": "Pompa di calore",
         "step": {
             "user": {
                 "data": {
                     "host": "Host",
-                    "password": "Password",
-                    "username": "Nome utente",
-                    "use_enlighten": "Usa Enlighten",
-                    "serial": "Numero di serie envoy",
+                    "password": "Password"
                 },
                 "description": "Per i modelli pi\u00f9 recenti, inserisci il nome utente \"envoy\" senza password. Per i modelli pi\u00f9 vecchi, inserisci il nome utente \"installer\" senza password. Per tutti gli altri modelli, inserisci un nome utente e una password validi."
             }
