@@ -5,33 +5,7 @@ import os
 from colorama import Fore, Style
 
 # Com Connection
-def is_packet_ok(data):
-	if len(data) > 0:
-		Head = data [0:4]
-		Lenght = data [20:24]
-		Lenght_int = int.from_bytes(bytes.fromhex(Lenght), byteorder="little")
-		Lenght_total = len(data)/2
-		Trail = data[len(data)-2:len(data)]
-		if Head == "aa55" and Trail == "3a":
-			return True
-		else:
-			return False
 
-def decode_packet(data):
-	SensorValue = []
-	Lenght = data [20:24]
-	Lenght_int = int.from_bytes(bytes.fromhex(Lenght), byteorder="little")
-	try:
-		for i in range(26,Lenght_int*2-2,8):
-			#print(Data_hex[i:i+8])
-			value = struct.unpack('<f',bytes.fromhex(data [i+4:i+8])+bytes.fromhex(data [i:i+4]))
-			Value, = value
-			#	print(SensorName[int((i-26)/8)] + ":    " + str(Value))
-			SensorValue.append(round(Value,1))
-	except:
-		print('ERROR: Decode exception')
-	else:
-		return SensorValue
 
 class SerialMonitor:
 	def __init__(self, ip, port):
@@ -51,6 +25,32 @@ class SerialMonitor:
 		print('Created serial connection')
 		self.device.reset_input_buffer()
 		self.device.reset_output_buffer()
+
+	def is_packet_ok(data):
+		if len(data) > 0:
+			Head = data [0:4]
+			Lenght = data [20:24]
+			#Lenght_int = int.from_bytes(bytes.fromhex(Lenght), byteorder="little")
+			#Lenght_total = len(data)/2
+			Trail = data[len(data)-2:len(data)]
+			if Head == "aa55" and Trail == "3a":
+				return True
+			else:
+				return False
+
+	def decode_packet(data):
+		SensorValue = []
+		Lenght = data [20:24]
+		Lenght_int = int.from_bytes(bytes.fromhex(Lenght), byteorder="little")
+		try:
+			for i in range(26,Lenght_int*2-2,8):
+				value = struct.unpack('<f',bytes.fromhex(data [i+4:i+8])+bytes.fromhex(data [i:i+4]))
+				Value, = value
+				SensorValue.append(round(Value,1))
+		except:
+			print('ERROR: Decode exception')
+		else:
+			return SensorValue
 
 	def read_sensors(self):
 		self.device.reset_input_buffer()
