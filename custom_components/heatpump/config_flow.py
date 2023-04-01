@@ -13,7 +13,7 @@ from homeassistant.exceptions import HomeAssistantError
 
 from .const import DOMAIN
 
-from heatpump import *
+from .heatpump import *
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -23,22 +23,6 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
         vol.Required("port"): str
     }
 )
-
-
-class PlaceholderHub:
-    """Placeholder class to make tests pass.
-
-    TODO Remove this placeholder class and replace with things from your PyPI package.
-    """
-
-    def __init__(self) -> None:
-        """Initialize."""
-
-    async def authenticate(self, address: str, port: str) -> bool:
-        test = SerialMonitor(address, port)
-        if test.test_connection():
-            return True
-
 
 async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str, Any]:
     """Validate the user input allows us to connect.
@@ -52,10 +36,9 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     # await hass.async_add_executor_job(
     #     your_validate_func, data["username"], data["password"]
     # )
+    test = SerialMonitor(data["address"], data["port"])
 
-    hub = PlaceholderHub()
-
-    if not await hub.authenticate(data["address"], data["port"]):
+    if not await test.test_connection():
         raise InvalidAuth
 
     # If you cannot connect:
